@@ -1,8 +1,15 @@
 
+using ASP_NET_Core_MVC.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<ITransientService, ImplementService>();
+builder.Services.AddScoped<IScopedService, ImplementService>();
+builder.Services.AddSingleton<ISingletonService, ImplementService>();
+
+//builder.Services.AddSingleton<IScopedService, SimpleService>();
 
 var app = builder.Build();
 
