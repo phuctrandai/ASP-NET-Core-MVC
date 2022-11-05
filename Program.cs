@@ -1,6 +1,7 @@
 
 using ASP_NET_Core_MVC.Middlewares;
 using Microsoft.AspNetCore.Http.Extensions;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,12 +34,30 @@ app.Use(async (context, next) =>
 
     context.Request.QueryString = queryBuilder.ToQueryString();
 
-    await next.Invoke();
+    await next();
 
     await context.Response.WriteAsync("Response from middleware");
 });
 
 app.AddFirstMiddleware();
+
+app.Use(async (context, next) =>
+{
+    var cultureCookie = context.Request.Cookies["culture"];
+    if (!string.IsNullOrEmpty(cultureCookie))
+    {
+        var culture = new CultureInfo(cultureCookie);
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
+    }
+    else
+    {
+        CultureInfo.CurrentCulture = new CultureInfo("vi-vn");
+        CultureInfo.CurrentUICulture = new CultureInfo("vi-vn");
+    }
+
+    await next();
+});
 
 app.MapControllerRoute(
     name: "default",
