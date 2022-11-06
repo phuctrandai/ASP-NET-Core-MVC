@@ -34,11 +34,11 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseStaticFiles();
-
 app.UseAuthentication();
 
-app.UseAuthorization();
+app.UseStaticFiles();
+
+app.UseDirectoryBrowser();
 
 var fileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "MyStaticFiles"));
 var requestPath = "/MyStaticFiles";
@@ -49,6 +49,14 @@ app.UseStaticFiles(new StaticFileOptions
     FileProvider = fileProvider,
     RequestPath = requestPath
 });
+
+app.UseDirectoryBrowser(new DirectoryBrowserOptions
+{
+    FileProvider = fileProvider,
+    RequestPath = requestPath
+});
+
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
