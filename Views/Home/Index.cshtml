@@ -5,4 +5,20 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <h1>@ViewBag.SessionValue</h1>
+    <h1>@ViewBag.TempDataValue</h1>
+    <h1>@ViewBag.ValueFromView</h1>
+    <h1>@ViewData["ViewDataValue"]</h1>
 </div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}
+
+@section ValidationScripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

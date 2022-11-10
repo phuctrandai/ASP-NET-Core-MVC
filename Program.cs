@@ -4,6 +4,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = ".AdventureWorks.Session";
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,8 +28,24 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseSession();
+
+app.MapDefaultControllerRoute();
+
+//app.MapControllerRoute(
+//    name: "privacy",
+//    pattern: "Home/123",
+//    defaults: new { controller = "Home", action = "Privacy" });
+
+//app.MapControllerRoute(
+//    name: "error",
+//    pattern: "Home/error",
+//    defaults: new { controller = "Home", action = "Error" });
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//app.MapControllers();
 
 app.Run();

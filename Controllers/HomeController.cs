@@ -15,15 +15,29 @@ namespace ASP_NET_Core_MVC.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.SessionValue = HttpContext.Session.GetString("Key");
+            ViewBag.TempDataValue = TempData.Peek("TempKey");
+
+            ViewBag.ValueFromView = TempData["ValueFromView"];
+
+            //ViewBag.ViewDataValue = ViewData["ViewDataValue"];
+
+            ViewData["2"] = "Data from Controller";
+
+            //TempData.Keep("TempKey");
+
             return View();
         }
 
         public IActionResult Privacy()
         {
+            HttpContext.Session.SetString("Key", "Value");
+
+            TempData["TempKey"] = "TempData Value";
+
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
