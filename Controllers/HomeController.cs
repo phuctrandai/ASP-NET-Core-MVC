@@ -20,11 +20,7 @@ namespace ASP_NET_Core_MVC.Controllers
 
             ViewBag.ValueFromView = TempData["ValueFromView"];
 
-            //ViewBag.ViewDataValue = ViewData["ViewDataValue"];
-
             ViewData["2"] = "Data from Controller";
-
-            //TempData.Keep("TempKey");
 
             return View();
         }
